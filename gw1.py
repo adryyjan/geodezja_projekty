@@ -103,6 +103,6 @@ print("azymut:", b(e, n))
 c = num.vectorize(odl_z)
 print("zenitalna odleglość:", c(n, e, u))
 
-    
+#  TUTAJ JESZCZE WYKRESY !!!!!!
     
 
