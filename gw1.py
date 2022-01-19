@@ -104,5 +104,6 @@ c = num.vectorize(odl_z)
 print("zenitalna odleglość:", c(n, e, u))
 
 #  TUTAJ JESZCZE WYKRESY !!!!!!
+# Ogarnąć czy się zgadza wszystko ze str i wziąć dłuższy lot może i jak będzie git to git
     
 
