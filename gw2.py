@@ -9,7 +9,9 @@ window.geometry("1080x400")
 window.title("Astronomia geodezyjna ")
 window.configure(background = 'black')
 
-
+Warzszawa = [52.1347, 21.0042]
+Nairobi = [-1.1659, 36.4900]
+Sydney = [-33.5204, 151.1226]
 
 # 8h 16min 30.924sec
 rek = (( 8 + 16/60 + 30.924/3600) * 15) 
@@ -83,10 +85,6 @@ def transf_wspol(fi, git_dek, t):
     
     return x, y, z
 
-
-Warzszawa = [52.1347, 21.0042]
-Nairobi = [-1.1659, 36.4900]
-Sydney = [-33.5204, 151.1226]
 
 godz[]
 
