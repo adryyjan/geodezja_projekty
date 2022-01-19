@@ -88,7 +88,12 @@ Warzszawa = [52.1347, 21.0042]
 Nairobi = [-1.1659, 36.4900]
 Sydney = [-33.5204, 151.1226]
 
-godz = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+godz[]
+
+for i in rande (0,24):
+    godz[i] = i
+
+
 godz = num.asarray(godz)
 
 
@@ -153,9 +158,7 @@ def w62d():
 
 
 b = num.vectorize(azymut)
-print("azymut dla wawy:", b(Warzszawa[0], git_dek, t_w))
 c = num.vectorize(wysokosc)
-print("wysokosc dla wawy:", c(Warzszawa[0], git_dek, t_w))
 d = num.vectorize(transf_wspol)
 x_wa, y_wa, z_wa = d(Warzszawa[0], git_dek, t_w)
 x_pm, y_pm, z_pm = d(Sydney[0], git_dek, t_s)
