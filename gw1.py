@@ -114,19 +114,26 @@ print("azymut:", b(e, n))
 c = num.vectorize(odl_z)
 print("zenitalna odleglość:", c(n, e, u))
 
-def wykres_2d():
+def wykres_2d_lf():
     
     plt.plot(tab_lam, tab_fi)
     plt.xlabel('fi')
     plt.ylabel('lambda')
     plt.title('lam(fi)')
     plt.show()
+    
+def wykres_3d_flh():
+    
+    ax = plt.axes(projection="3d")
 
-def wykres_3d():
+    ax.scatter3D(tab_fi, tab_lam, tab_h)
+
+    plt.show()
+
+def wykres_3d_neu():
     
     mac = conv_geo_neu(F_lot, L_lot, H_lot, tab_fi, tab_lam, tab_h)
 
-    fig = plt.figure()
     ax = plt.axes(projection="3d")
 
     ax.scatter3D(mac[0],mac[1], mac[2])
@@ -134,20 +141,28 @@ def wykres_3d():
     plt.show()
 
 obl = Button(window,
-            text="Wykres 2D",
-            command=wykres_2d,
+            text="Wykres lambda fi",
+            command=wykres_2d_lf,
             font=("Arial",10,'bold'),
             activeforeground="black",
             activebackground="#F0FFC0")
-obl.place(x=130, y=50)
+obl.place(x=100, y=40)
 
 obl = Button(window,
-            text="Wykres 3D",
-            command=wykres_3d,
+            text="  Wykres 3D NEU ",
+            command=wykres_3d_neu,
             font=("Arial",10,'bold'),
             activeforeground="black",
             activebackground="#F0FFC0")
-obl.place(x=130, y=100)
+obl.place(x=100, y=90)
+
+obl = Button(window,
+            text="     Wykres 3D     ",
+            command=wykres_3d_flh,
+            font=("Arial",10,'bold'),
+            activeforeground="black",
+            activebackground="#F0FFC0")
+obl.place(x=100, y=140)
 
 window.mainloop()
 
