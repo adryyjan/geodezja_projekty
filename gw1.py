@@ -1,7 +1,6 @@
 import numpy as num
 from numpy import *
-import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 # stałe
 a=6378137 
@@ -13,24 +12,24 @@ L_lot = -3.5751
 H_lot = 648.00
 
 
-# operacja na plikach, otwarcie i skopiowanie zawartosci pliku do zmiennych 
-f = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/dane_2.txt').readlines()
-f2 = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/dane_2.txt', 'r+')
+# # # operacja na plikach, otwarcie i skopiowanie zawartosci pliku do zmiennych 
+# f = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/wlasciwe_dane.txt').readlines()
+# f2 = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/wlasciwe_dane.txt', 'r+')
 
-#zamiana tabulatorwo z kolumn excela na przecinki oraz formatowania dziesientnego ecela aby python je dobrze czytał
+# #zamiana tabulatorwo z kolumn excela na przecinki oraz formatowania dziesientnego ecela aby python je dobrze czytał
 
-for s in f:
-	f2.write(s.replace('\t', ";"))
+# for s in f:
+# 	f2.write(s.replace('\t', ";"))
     
-for s in f:    
-    f2.write(s.replace(",", "."))
+# for s in f:    
+#     f2.write(s.replace(",", "."))
     
 
-f2.close()
+# f2.close()
 
 #pobranie danych z pliku txt i separacją danych jest ';'
 
-data = num.genfromtxt('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/dane_2.txt', delimiter=';')
+data = num.genfromtxt('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/dane.txt', delimiter=';')
 tab_fi = data[:, 0:1].astype(float).squeeze()
 tab_lam = data[:, 1:2].astype(float).squeeze()
 tab_h = data[:, 2:3].astype(float).squeeze()
@@ -109,7 +108,22 @@ print("azymut:", b(e, n))
 c = num.vectorize(odl_z)
 print("zenitalna odleglość:", c(n, e, u))
 
-#  TUTAJ JESZCZE WYKRESY !!!!!!
+plt.plot(tab_lam, tab_fi)
+plt.xlabel('fi')
+plt.ylabel('lambda')
+plt.title('lam(fi)')
+plt.show()
+
+mac = conv_geo_neu(F_lot, L_lot, H_lot, tab_fi, tab_lam, tab_h)
+
+fig = plt.figure()
+ax = plt.axes(projection="3d")
+
+ax.scatter3D(mac[0],mac[1], mac[2])
+
+plt.show()
+
+
 # Ogarnąć czy się zgadza wszystko ze str i wziąć dłuższy lot może i jak będzie git to git
     
 
