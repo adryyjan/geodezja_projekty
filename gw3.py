@@ -192,21 +192,23 @@ def pole(fi1, lam1, fi2, lam2):
 
 x = srodek(B[0], C[0])
 y = srodek(B[1], C[1])
+print('\n',"________________________________________")
+print('\n',"-----------------Wyniki-----------------")
+print('\n', "Współrzędne punktu średniej szerokości:",'\n', "fi:", dec_st(x),'\n', "lam:", dec_st(y))
+print("________________________________________")
 
-print("Współrzędne punktu średniej szerokości:",'\n','\n', "fi:", dec_st(x),'\n', "lam:", dec_st(y))
-
-print('\n','\n',"Pierwsze uzycie algorytmu VINCENTEGO",'\n')
+print('\n',"Pierwsze uzycie algorytmu VINCENTEGO",'\n')
 s, A_ab, A_ba = vincent(a,e2,A[0], A[1], D[0], D[1])
 print(" Długość linii geodezyjnej:", round(s, 5), '\n', "Azymut wprost", dec_st(A_ab), '\n', "Azymut odwrotny:", dec_st(A_ba))
-
+print('\n',"________________________________________")
 print('\n','\n',"Użycie algorytmu KIJOVI")
 fi, lam, Az_12 = kijovi(a, e2, A[0], A[1], A_ab, s)
 print(" Współrzędne punktu środkowego:",'\n', "fi:", dec_st(fi),'\n', "lam:", dec_st(lam))
-
-print('\n','\n', "Ponowne użycie algorytmu VINCENTEGO")
+print('\n',"________________________________________")
+print('\n', "Ponowne użycie algorytmu VINCENTEGO")
 s1, A_xy, A_yx = vincent(a, e2, x, y, fi, lam)
 print('\n',"Różnica odległości pomiędzy punktem środkowym a punktem średniej szerokości:", round(s1, 5),"m", '\n', "Azymut wprost:", dec_st(A_xy), '\n', "Azymut odwrotny:",
           dec_st(A_yx))
-
+print('\n',"________________________________________")
 p = pole(A[0], A[1], D[0], D[1])
-print('\n','\n',"Pole powierzchni:", p, "m^2")
+print('\n',"Pole powierzchni:", p/1000000, "km^2")
