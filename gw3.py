@@ -25,54 +25,58 @@ def dec_st(x):
     return (str(str(h) + "°"+str(m) + "'"+str(s) + "''"))
 
 def vincent(a, e2, fi1, lam1, fi2, lam2):
-    b = (a * pow((1 - e2), 0.5))
-    f = (1 - b/a)
-    fi1 = num.deg2rad(fi1)
-    fi2 = num.deg2rad(fi2)
-    lam1 = num.deg2rad(lam1)
-    lam2 = num.deg2rad(lam2)
     
-    L1 = lam2 - lam1
-    
-    U_a = num.arctan(1 - f) * num.tan(fi1)
-    U_b = num.arctan(1 - f)  * num.tan(fi2)
-    
-    warunek = num.deg2rad(0.00001/3600)
-    
-    L2 = L1
-    
-    while abs(L1 - L2) < warunek:
-        sin_sig = pow(num.cos(U_b) * pow(num.sin(L1), 2) + pow(num.cos(U_a) * num.sin(U_b) - num.sin(U_a) * num.cos(U_b) * num.cos(L1), 2), 0.5)
-        
-        cos_sig = num.sin(U_a) * num.sin(U_b) + num.cos(U_a) * num.cos(U_b) * num.cos(L1)
-        
-        sig = num.arctan(sin_sig / cos_sig)
-        
-        sin_alfa = num.cos(U_a) * num.cos(U_b) * num.sin(L1) / num.sin(sig)
-        
-        cos_al_2 = (1 - pow(sin_alfa, 2))
-        
-        cos_2_sig = pow(cos_al_2, 0.5 )- (2 * num.sin(U_a) * num.sin(U_b) / cos_al_2)
-        
-        C = f / 16 * cos_al_2 * (4 + f * (4 - 3 * cos_al_2))
-        
-        L2 = L1 + (1 - C) * f * sin_alfa * (sig + C * sin_sig * (cos_2_sig + C * cos_sig * (-1 + 2 * pow(cos_2_sig, 2))))
-        
+    b = a * (1 - e2) ** 0.5
+    f = 1 - b / a
 
-    L1 = L2 
-    
+    fi1 = num.deg2rad(fi1)
+    lam1 = num.deg2rad(lam1)
+    fi2 = num.deg2rad(fi2)
+    lam2 = num.deg2rad(lam2)
+
+    delta_lam = lam2 - lam1
+
+    U_a = num.arctan((1 - f) * num.tan(fi1))
+    U_b = num.arctan((1 - f) * num.tan(fi2))
+
+    L = delta_lam
+    sec = num.deg2rad(0.000001 / 3600)
+
+    while True:
+        sin_sig = pow(pow((num.cos(U_b) * num.sin(L)), 2) +pow((num.cos(U_a) * num.sin(U_b) - num.sin(U_a) *
+                                                                num.cos(U_b) * num.cos(L)), 2), 0.5)
+
+        cos_sig = num.sin(U_a) * num.sin(U_b) + num.cos(U_a) * num.cos(U_b) * num.cos(L)
+
+        sig = num.arctan(sin_sig / cos_sig)
+
+        sin_alfa = num.cos(U_a) * num.cos(U_b) * num.sin(L) / num.sin(sig)
+
+        cos_al_2 = 1 - pow(sin_alfa, 2)
+
+        cos_2_sig = pow(cos_al_2, 0.5) - (2 * num.sin(U_a) * num.sin(U_b) / cos_al_2)
+
+        C = f / 16 * cos_al_2 * (4 + f * (4 - 3 * cos_al_2))
+
+        L2 = delta_lam + (1 - C) * f * sin_alfa * (sig + C * sin_sig * (cos_2_sig + C * cos_sig *
+                                                                    (-1 + 2 * cos_2_sig ** 2)))
+        if abs(L2 - L) < sec:
+            break
+
+        L = L2
+
     u_2 = (pow(a, 2) - pow(b, 2)) / pow(b, 2) * cos_al_2
     
     A = 1 + u_2 / 16384 * (4096 + u_2 * (-768 + u_2 * (320 - 175 * u_2)))
     
     B = u_2 / 1024 * (256 + u_2 * (-128 + u_2 * (74 - 47 * u_2)))
     
-    del_sig = B * sin_sig * (cos_2_sig + 1 / 4 * B * (cos_sig * (-1 + 2 * pow(cos_2_sig, 2)) - 
-                                                        
-                                                        1 / 6 * B * cos_2_sig * (-3 + 4 * pow(sin_sig, 2)) * (-3 + 4 * pow(cos_2_sig, 2))))
+    del_sig = B * sin_sig * (cos_2_sig + 1 / 4 * B * (cos_sig * (-1 + 2 * pow(cos_2_sig, 2)) - 1 / 6 * B * cos_2_sig
+                                                      
+                                      * (-3 + 4 * pow(sin_sig, 2)) * (-3 + 4 * pow(cos_2_sig, 2))))
     
-    s_A_B = b * A * (sig - del_sig)   
-    
+    s_A_B = b * A * (sig - del_sig)
+
     licz_ab = num.cos(U_b) * num.sin(L2)
     
     mian_ab = num.cos(U_a) * num.sin(U_b) - num.sin(U_a) * num.cos(U_b) * num.cos(L2)
@@ -91,9 +95,9 @@ def vincent(a, e2, fi1, lam1, fi2, lam2):
     elif (licz_ab > 0 and mian_ab < 0) or (licz_ab < 0 and mian_ab < 0):
         
         A_AB = num.rad2deg(A_AB + num.pi)
-    
-    
-    licz_ba = num.cos(U_a) * num.sin(L2)
+        
+
+    licz_ba = num.cos(U_b) * num.sin(L2)
     
     mian_ba = -num.sin(U_a) * num.cos(U_b) + num.cos(U_a) * num.sin(U_b) * num.cos(L2)
     
@@ -111,8 +115,8 @@ def vincent(a, e2, fi1, lam1, fi2, lam2):
     elif (licz_ba > 0 and mian_ba < 0) or (licz_ba < 0 and mian_ba < 0):
         
         A_BA = num.rad2deg(A_BA + 2 * num.pi)
-    
-    return (s_A_B, A_AB, A_BA)
+
+    return s_A_B, A_AB, A_BA
         
 
 def kijovi(a, e2, fi, lam, A_AB, s):

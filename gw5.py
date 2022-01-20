@@ -37,6 +37,7 @@ D = [50, 21.25]
 
 h = 1
 
+
 def dec_st(x):
     
     h = int(x)
@@ -109,13 +110,13 @@ srodkowy = []
 
 srodkowy.append(zmiana(49,59,33.94))
 srodkowy.append(zmiana(21,0,6.62))
-
+print(srodkowy)
 
 sr_szer = [] 
 
 sr_szer.append(zmiana(50,7,30))
 sr_szer.append(zmiana(21))
-
+print(sr_szer)
 xa, ya, za = do_xyz(A[0], A[1], h)
 xb, yb, zb = do_xyz(B[0], B[1], h)
 xc, yc, zc = do_xyz(C[0], C[1], h)
@@ -166,7 +167,7 @@ print(
     "Punkt B:", fi_b, lam_b, round(h_b, 6), '\n',
     "Punkt C:", fi_c, lam_c, round(h_c, 6), '\n',
     "Punkt D:", fi_d, lam_d, round(h_d, 6), '\n',
-    "Środkowy:", fi_sr_szer, lam_srodkowy,round(h_srodkowy,6), '\n',
+    "Środkowy:", fi_sr_szer, lam_srodkowa, round(h_srod,6), '\n',
     "Średniej szerokości:", fi_sr_szer, lam_sr_szer, round(h_sr_szer, 6), '\n')
 
 
