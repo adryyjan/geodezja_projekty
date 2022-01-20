@@ -8,9 +8,9 @@ a=6378137
 e2=0.00669437999013
 
 # wspołrzędne
-F_lot = 40.5298
-L_lot = -3.5751
-H_lot = 648.00
+F_lot = 40.5292
+L_lot = -3.5753
+H_lot = 648.03
 
 window = Tk()
 window.geometry("320x200")
@@ -19,8 +19,8 @@ window.configure(background = 'black')
 
 
 # # # operacja na plikach, otwarcie i skopiowanie zawartosci pliku do zmiennych 
-# f = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/wlasciwe_dane.txt').readlines()
-# f2 = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/wlasciwe_dane.txt', 'r+')
+# f = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/ostateczne_dane.txt').readlines()
+# f2 = open('C:/Users/a6r14/OneDrive/Dokumenty/python/projekt/ostateczne_dane.txt', 'r+')
 
 # #zamiana tabulatorwo z kolumn excela na przecinki oraz formatowania dziesientnego ecela aby python je dobrze czytał
 
