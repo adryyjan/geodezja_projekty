@@ -86,10 +86,10 @@ def transf_wspol(fi, git_dek, t):
     return x, y, z
 
 
-godz[]
+godz = []
 
-for i in rande (0,24):
-    godz[i] = i
+for i in range(0,24):
+    godz.append(i)
 
 
 godz = num.asarray(godz)
