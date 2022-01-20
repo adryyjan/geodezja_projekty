@@ -1,5 +1,6 @@
 import numpy as num
 from numpy import *
+from tkinter import *
 import matplotlib.pyplot as plt
 
 # stałe
@@ -10,6 +11,11 @@ e2=0.00669437999013
 F_lot = 40.5298
 L_lot = -3.5751
 H_lot = 648.00
+
+window = Tk()
+window.geometry("320x200")
+window.title("Tor lotu samolotu")
+window.configure(background = 'black')
 
 
 # # # operacja na plikach, otwarcie i skopiowanie zawartosci pliku do zmiennych 
@@ -108,21 +114,42 @@ print("azymut:", b(e, n))
 c = num.vectorize(odl_z)
 print("zenitalna odleglość:", c(n, e, u))
 
-plt.plot(tab_lam, tab_fi)
-plt.xlabel('fi')
-plt.ylabel('lambda')
-plt.title('lam(fi)')
-plt.show()
+def wykres_2d():
+    
+    plt.plot(tab_lam, tab_fi)
+    plt.xlabel('fi')
+    plt.ylabel('lambda')
+    plt.title('lam(fi)')
+    plt.show()
 
-mac = conv_geo_neu(F_lot, L_lot, H_lot, tab_fi, tab_lam, tab_h)
+def wykres_3d():
+    
+    mac = conv_geo_neu(F_lot, L_lot, H_lot, tab_fi, tab_lam, tab_h)
 
-fig = plt.figure()
-ax = plt.axes(projection="3d")
+    fig = plt.figure()
+    ax = plt.axes(projection="3d")
 
-ax.scatter3D(mac[0],mac[1], mac[2])
+    ax.scatter3D(mac[0],mac[1], mac[2])
 
-plt.show()
+    plt.show()
 
+obl = Button(window,
+            text="Wykres 2D",
+            command=wykres_2d,
+            font=("Arial",10,'bold'),
+            activeforeground="black",
+            activebackground="#F0FFC0")
+obl.place(x=130, y=50)
+
+obl = Button(window,
+            text="Wykres 3D",
+            command=wykres_3d,
+            font=("Arial",10,'bold'),
+            activeforeground="black",
+            activebackground="#F0FFC0")
+obl.place(x=130, y=100)
+
+window.mainloop()
 
 # Ogarnąć czy się zgadza wszystko ze str i wziąć dłuższy lot może i jak będzie git to git
     
