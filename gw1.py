@@ -8,9 +8,9 @@ a=6378137
 e2=0.00669437999013
 
 # wspołrzędne
-F_lot = 40.5292
-L_lot = -3.5753
-H_lot = 648.03
+F_lot = 48.9950
+L_lot = 2.5311
+H_lot = 404.00
 
 window = Tk()
 window.geometry("320x200")
@@ -46,7 +46,7 @@ def conv_geo_xyz(fi, lam, h, a, e2):
     
     fi = num.deg2rad(fi)
     lam = num.deg2rad(lam)
-    N = (a / (1 - (e2) * pow(pow(num.sin(fi), 2), 0.5)))
+    N = (a / (1 - pow((e2) * pow(num.sin(fi), 2), 0.5)))
     
     x = ((N + h) * num.cos(fi) * num.cos(lam))
     y = ((N + h) * num.cos(fi) * num.sin(lam))
@@ -90,7 +90,7 @@ def skos(n, e, u):
 def odl_z(n, e, u):
     
     if skos(n, e, u) == 0:
-        return ( 0 )
+        pass
     else:
         return (u/skos(n, e, u))
     
@@ -109,11 +109,20 @@ def azymut(e, n):
 
 n, e, u = conv_geo_neu(F_lot, F_lot, H_lot, tab_fi, tab_lam, tab_h)
 print("skośna odległosć:", skos(n, e, u))
-b = num.vectorize(azymut)
-print("azymut:", b(e, n))
-c = num.vectorize(odl_z)
-print("zenitalna odleglość:", c(n, e, u))
+azymut_2 = num.vectorize(azymut)
+print("azymut:", azymut_2(e, n))
+odl_zen = num.vectorize(odl_z)
+print("zenitalna odleglość:", odl_zen(n, e, u))
 
+# licz = 0
+
+# for a in u:
+#         licz = licz +1
+#         if a < 0:
+#             print(n[licz], e[licz], u[licz])
+#             break
+
+    
 def wykres_2d_lf():
     
     plt.plot(tab_lam, tab_fi)
@@ -126,7 +135,7 @@ def wykres_3d_flh():
     
     ax = plt.axes(projection="3d")
 
-    ax.scatter3D(tab_fi, tab_lam, tab_h)
+    ax.scatter3D( tab_lam,tab_fi, tab_h)
 
     plt.show()
 
@@ -163,6 +172,7 @@ obl = Button(window,
             activeforeground="black",
             activebackground="#F0FFC0")
 obl.place(x=100, y=140)
+
 
 window.mainloop()
 

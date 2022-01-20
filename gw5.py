@@ -10,7 +10,8 @@ global y0
 global z0 
 global ex 
 global ey 
-global ez 
+global ez
+global h  
  
 
 a = 6378137 
@@ -23,18 +24,18 @@ x0 = -33.4297
 y0 = 146.5746
 z0 = 76.2865
 
-ex = -0.35867
-ey = -0.05283
-ez = 0.84354
+ex = -0.35867/3600
+ey = -0.05283/3600
+ez = 0.84354/3600
 
-kappa = 0.8407728 * 10 ** -6
+kappa = pow(0.8407728 * 10, -6)
 
 A = [50.25, 20.75]
 B = [50, 20.75]
 C = [50.25, 21.25]
 D = [50, 21.25]
 
-h = 0
+h = 1
 
 def dec_st(x):
     
@@ -88,13 +89,14 @@ def hirv(x, y, z, a, e2):
 
 def transform(x, y, z):
     
-    al = np.deg2rad(ex/3600)
-    bet = np.deg2rad(ey/3600)
-    gm = np.deg2rad(ez/3600)
+    al = np.deg2rad(ex)
+    bet = np.deg2rad(ey)
+    gm = np.deg2rad(ez)
     
-    M = np.array([[kappa, gm, -bet],
-              [-gm, kappa, al],
-              [bet, -al, kappa]])
+    M = np.array([
+        [kappa, gm, -bet],
+        [-gm, kappa, al],
+        [bet, -al, kappa]])
     
     M_p = np.array([x,y,z])
     
@@ -155,16 +157,17 @@ print(
     "B:", transform(xb, yb, zb), '\n',
     "C:", transform(xc, yc, zc), '\n',
     "D:", transform(xd, yd, zd), '\n',
-    "Środkowy:", fi_srodkowy, lam_srodkowy, h_srodkowy, '\n',
-    "Średniej szerokości:", hirv(fi_sr_szero, lam_sr_szero, h_sr_szero, a1, e21))
+    "Środkowy:", transform(fi_srodkowy, lam_srodkowy, h_srodkowy), '\n',
+    "Średniej szerokości:", transform(fi_sr_szero, lam_sr_szero, h_sr_szero))
 
+print('\n', "_____________________________________________", '\n')
 print(
-    " Punkt A:", fi_a, lam_a, round(h_a, 3), '\n',
-    "Punkt B:", fi_b, lam_b, round(h_b, 3), '\n',
-    "Punkt C:", fi_c, lam_c, round(h_c, 3), '\n',
-    "Punkt D:", fi_d, lam_d, round(h_d, 3), '\n',
-    "Środkowy:", transform(x_srodkowy, y_srodkowy, z_srodkowy), '\n',
-    "Średniej szerokości:", fi_sr_szer, lam_sr_szer, round(h_sr_szer, 3), '\n')
+    " Punkt A:", fi_a, lam_a, round(h_a, 6), '\n',
+    "Punkt B:", fi_b, lam_b, round(h_b, 6), '\n',
+    "Punkt C:", fi_c, lam_c, round(h_c, 6), '\n',
+    "Punkt D:", fi_d, lam_d, round(h_d, 6), '\n',
+    "Środkowy:", fi_sr_szer, lam_srodkowy,round(h_srodkowy,6), '\n',
+    "Średniej szerokości:", fi_sr_szer, lam_sr_szer, round(h_sr_szer, 6), '\n')
 
 
     

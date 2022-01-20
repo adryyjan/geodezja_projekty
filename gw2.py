@@ -17,6 +17,7 @@ Sydney = [-33.5204, 151.1226]
 rek = (( 8 + 16/60 + 30.924/3600) * 15) 
 git_rek = num.deg2rad(rek)
 
+
 #  9h 11min 7.98sec
 dek = ( 9 + 11/60 + 7.98/3600)
 git_dek = num.deg2rad(dek)
@@ -88,16 +89,16 @@ def transf_wspol(fi, git_dek, t):
 
 godz = []
 
-for i in range(0,24):
+for i in range(0,25):
     godz.append(i)
 
 
 godz = num.asarray(godz)
 
 
-t_w = kat_h(2022, 1, 17, godz, Warzszawa[1], rek)
-t_n = kat_h(2021, 1,17, godz, Nairobi[1], rek)
-t_s = kat_h(2021, 1, 17, godz, Sydney[1], rek)
+t_w = kat_h(2022, 1, 7, godz, Warzszawa[1], rek)
+t_n = kat_h(2022, 1, 7, godz, Nairobi[1], rek)
+t_s = kat_h(2022, 1, 7, godz, Sydney[1], rek)
 
 # wysokosc gwiazdy nad horyzontem od czasu
 h_w = wysokosc(Warzszawa[0], dek, t_w)
@@ -207,7 +208,7 @@ obl = Button(window,
             font=("Arial",10,'bold'),
             activeforeground="black",
             activebackground="#F0FFC0")
-obl.place(x=820, y=250)
+obl.place(x=450, y=250)
 
 obl = Button(window,
             text="Tor ruchu gwiazdy nad Nairobi",
@@ -215,7 +216,7 @@ obl = Button(window,
             font=("Arial",10,'bold'),
             activeforeground="black",
             activebackground="#F0FFC0")
-obl.place(x=450, y=250)
+obl.place(x=820, y=250)
 
 obl = Button(window,
             text="Tor ruchu gwiazdy nad Warszawą",
@@ -234,12 +235,12 @@ obl = Button(window,
 obl.place(x=70, y=80)
 
 obl = Button(window,
-            text="Odległość zenitalna gwiazdy od Warszawy Sydney",
+            text="Odległość zenitalna gwiazdy od Sydney",
             command=w22d,
             font=("Arial",10,'bold'),
             activeforeground="black",
             activebackground="#F0FFC0")
-obl.place(x=390, y=80)
+obl.place(x=430, y=80)
 
 obl = Button(window,
             text="Odległość zenitalna gwiazdy od Nairobi",
