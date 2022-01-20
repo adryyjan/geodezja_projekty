@@ -1,6 +1,7 @@
 import numpy as num
 from shapely.geometry import Polygon
 
+#zmienne globalne i stałe
 
 global a 
 global e2
@@ -19,6 +20,7 @@ C = [50.25, 21.25]
 D = [50, 21.25]
 
 
+# zamiana stopni na radiany
 
 def zmiana( s, m = 0.0 ,sec = 0.0):
     
@@ -26,6 +28,7 @@ def zmiana( s, m = 0.0 ,sec = 0.0):
     
     return r
 
+# transforamcja do układau Gaussa Krugera
 
 def do_GK(fi, lam, lam0):
     fi = num.deg2rad(fi)
@@ -55,6 +58,7 @@ def do_GK(fi, lam, lam0):
                 * pow(num.cos(fi), 4) * (5 - 18 * pow(t, 2) + pow(t, 4) + 14 * eta2 - 58 * eta2 * pow(t, 2)))
     return x, y
 
+# transformacja z Gausa  Kruggera
 
 def z_GK(x, y, lam0):
     lam0 = num.deg2rad(lam0)
@@ -94,6 +98,7 @@ def z_GK(x, y, lam0):
     lam = num.rad2deg(lam)
     return fi, lam
 
+# transformacja do układu 1992
 
 def do_1992(x, y):
     
@@ -101,12 +106,16 @@ def do_1992(x, y):
     y = m_92 * y + 500000
     return x, y
 
+
+# transformacja z układu 1992
+
 def z_1992(x, y):
     
     x = (x + 5300000)/m_92
     y = (y - 500000)/m_92
     return x, y
 
+# transformacja do układu 2000
 
 def do_2000(x, y, lam):
     lam = num.deg2rad(lam)
@@ -126,11 +135,15 @@ def do_2000(x, y, lam):
 
     return x, y
 
+# transformacja z układu 2000
+
 def z_2000(x, y, nr):
     
     x = x/m_20
     y = (y - 500000 - nr * 1000000)/m_20
     return x, y
+
+#oblicznie sklai czyli stałej, której wcześniej używaliśmy przy transforamcji dla układu 1992
 
 def skala_1992(x_gk, y_gk):
     x, y = z_1992(x_gk, y_gk)
@@ -147,6 +160,8 @@ def skala_1992(x_gk, y_gk):
 
     return m_92, kappa
 
+#oblicznie sklai czyli stałej, której wcześniej używaliśmy przy transforamcji dla układu 2000
+
 def skala_2000(x_gk, y_gk):
     
     x, y = z_2000(x_gk, y_gk, 7)
@@ -161,6 +176,8 @@ def skala_2000(x_gk, y_gk):
 
     return m2000, kappa
 
+#oblicznie sklai czyli stałej, której wcześniej używaliśmy przy transforamcji dla układu Gausa Kruggera
+
 def skala_GK(x_gk, y_gk):
     fi = z_GK(x_gk, y_gk, 19)
     M = a * (1 - e2) / pow((1 - e2 * pow(num.sin(fi), 2)), (3 / 2))
@@ -170,11 +187,15 @@ def skala_GK(x_gk, y_gk):
     kappa = (1 - m_gk) * 1000
     return m_gk, kappa
 
+# obliczneie skali dla pola
+
 def skala_pola(m, kappa):
     m = pow(m, 2)
     kappa = (1 - m) * 10000
     return m, kappa
 
+
+#tablice z przekształconymi na radiany wartosciami punktu średniego i środkowego 
 
 srodkowy = []
 
@@ -196,6 +217,7 @@ y_1992 = []
 x_2000 = []
 y_2000 = []
 
+# tablica do pobierania danych potrzebnych do oliczenia pól
 tab_do_pol = num.array([])
 tab_do_pol_1 = [A[0],B[0],C[0],D[0],A[0],sr_szer[0],srodkowy[0]]
 
@@ -287,22 +309,22 @@ print("A: " + str(x_gk[0]) + " " + str(y_gk[0]))
 print("B: " + str(x_gk[1]) + " " + str(y_gk[1]))
 print("C: " + str(x_gk[2]) + " " + str(y_gk[2]))
 print("D: " + str(x_gk[3]) + " " + str(y_gk[3]))
-print("S: " + str(x_gk[4]) + " " + str(y_gk[4]))
-print("M: " + str(x_gk[5]) + " " + str(y_gk[5]))
+print("Średniej szerokości: " + str(x_gk[4]) + " " + str(y_gk[4]))
+print("Środkowy : " + str(x_gk[5]) + " " + str(y_gk[5]))
 print("-----------------------92------------------------")
 print("A: " + str(x_1992[0]) + " " + str(y_1992[0]))
 print("B: " + str(x_1992[1]) + " " + str(y_1992[1]))
 print("C: " + str(x_1992[2]) + " " + str(y_1992[2]))
 print("D: " + str(x_1992[3]) + " " + str(y_1992[3]))
-print("S: " + str(x_1992[4]) + " " + str(y_1992[4]))
-print("M: " + str(x_1992[5]) + " " + str(y_1992[5]))
+print("Średniej szerokości: " + str(x_1992[4]) + " " + str(y_1992[4]))
+print("Środkowy: " + str(x_1992[5]) + " " + str(y_1992[5]))
 print("----------------------2000-----------------------")
 print("A: " + str(x_2000[0]) + " " + str(y_2000[0]))
 print("B: " + str(x_2000[1]) + " " + str(y_2000[1]))
 print("C: " + str(x_2000[2]) + " " + str(y_2000[2]))
 print("D: " + str(x_2000[3]) + " " + str(y_2000[3]))
-print("S: " + str(x_2000[4]) + " " + str(y_2000[4]))
-print("M: " + str(x_2000[5]) + " " + str(y_2000[5]))
+print("Średniej szerokości: " + str(x_2000[4]) + " " + str(y_2000[4]))
+print("Środkowy: " + str(x_2000[5]) + " " + str(y_2000[5]))
 print("---------------------tabela-2--------------------")
 print("Pole Elipsoidy: " + "994.265196074311" + " km^2.")
 print("Pole GK:        " + str(pole_gk ) + " km^2.")
@@ -314,23 +336,47 @@ print("A: " + str(GK_m_A))
 print("B: " + str(GK_m_B))
 print("C: " + str(GK_m_C))
 print("D: " + str(GK_m_D))
-print("S: " + str(GK_m_srszer))
-print("M: " + str(GK_m_srodkowy))
+print("Średniej szerokości: " + str(GK_m_srszer))
+print("Środkowy: " + str(GK_m_srodkowy))
 print("-----------------------92------------------------")
 print("A: " + str(m_A_1992))
 print("B: " + str(m_B_1992))
 print("C: " + str(m_C_1992))
 print("D: " + str(m_D_1992))
-print("S: " + str(m_srszer_1992))
-print("M: " + str(m_srodkowy_1992))
+print("Średniej szerokości: " + str(m_srszer_1992))
+print("Środkowy: " + str(m_srodkowy_1992))
 print("----------------------2000-----------------------")
 print("A: " + str(m_A_2000))
 print("B: " + str(m_B_2000))
 print("C: " + str(m_C_2000))
 print("D: " + str(m_D_2000))
-print("S: " + str(m_srszer_1992))
-print("M: " + str(m_srodkowy_1992))
+print("Średniej szerokości: " + str(m_srszer_2000))
+print("Środkowy: " + str(m_srodkowy_2000))
 print("-------------------------------------------------")
+print("--------------------tabela-dodadkowa-----------------")
+print("-----------------------GK------------------------")
+print("A: " + str(GK_kappa_A))
+print("B: " + str(GK_kappa_B))
+print("C: " + str(GK_kappa_C))
+print("D: " + str(GK_kappa_D))
+print("Średniej szerokości: " + str(GK_kappa_srszer))
+print("Środkowy: " + str(GK_kappa_srodkowy))
+print("-----------------------92------------------------")
+print("A: " + str(kappa_A_1992))
+print("B: " + str(kappa_A_1992))
+print("C: " + str(kappa_A_1992))
+print("D: " + str(kappa_A_1992))
+print("Średniej szerokości: " + str(kappa_srszer_1992))
+print("Środkowy: " + str(kappa_srodkowy_1992))
+print("----------------------2000-----------------------")
+print("A: " + str(kappa_A_2000))
+print("B: " + str(kappa_A_2000))
+print("C: " + str(kappa_A_2000))
+print("D: " + str(kappa_A_2000))
+print("Średniej szerokości: " + str(kappa_srszer_2000))
+print("Środkowy: " + str(kappa_srodkowy_2000))
+print("-------------------------------------------------")
+
 
 
 
