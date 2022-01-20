@@ -167,7 +167,4 @@ print(
     "Średniej szerokości:", fi_sr_szer, lam_sr_szer, round(h_sr_szer, 3), '\n')
 
 
-
-print(srodkowy)
-print(sr_szer)
     
